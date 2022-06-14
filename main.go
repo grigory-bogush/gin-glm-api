@@ -2,6 +2,7 @@ package main
 
 import (
 	"gin-glm-api/controllers"
+	"gin-glm-api/middleware"
 	"gin-glm-api/models"
 	"net/http"
 	"os"
@@ -14,6 +15,7 @@ func main() {
 	godotenv.Load()
 
 	r := gin.Default()
+	r.Use(middleware.CORSMiddleware())
 
 	admin_username := os.Getenv("ADMIN_USERNAME")
 	admin_pass := os.Getenv("ADMIN_PASSWORD")
@@ -30,6 +32,7 @@ func main() {
 	r.GET("/", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"version": "0.0.2", "status": "Up"})
 	})
+	authorized.GET("/check-auth", controllers.CheckAuth)
 	authorized.GET("/game-records", controllers.ListGameRecords)
 	authorized.POST("/create-game-record", controllers.CreateNewGameRecod)
 	authorized.GET("/game-record/:id", controllers.FindRecord)

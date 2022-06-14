@@ -10,7 +10,7 @@ import (
 type CreateGameRecordInput struct {
 	Name              string `json:"name" binding:"required"`
 	Platform          string `json:"platform" binding:"required"`
-	Medal             string `json:"medal" binding:"oneof=Silver Gold"`
+	Medal             string `json:"medal" binding:"omitempty,oneof=Silver Gold"`
 	CompleteTimeHours int    `json:"complete_time_hours" binding:"required,gt=0"`
 	Genre             string `json:"genre"`
 }
